@@ -1,0 +1,197 @@
+<!doctype html>
+<html lang="en"  xmlns:th="http://www.thymeleaf.org">
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+	<link rel="icon" href="https://i.pinimg.com/564x/ef/0c/77/ef0c771701846669a7ef6ee43650929e.jpg"/>
+	<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" crossorigin="anonymous">
+	<link rel="stylesheet" th:href="@{/css/global.css}" />
+	<link rel="stylesheet" th:href="@{/css/login.css}" />
+	<title>[WomenInCode] Sign In</title>
+</head>
+<body>
+	<div class="nk-container">
+		<!-- 头部 -->
+		<header class="sticky-top"style="background-color: #4f4487;" th:replace="index::header">
+			<div class="container">
+				<!-- Nav -->
+				<nav class="navbar navbar-expand-lg navbar-dark">
+					<!-- logo -->
+					<a class="navbar-brand" href="#"></a>
+					<button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+						<span class="navbar-toggler-icon"></span>
+					</button>
+					<!-- Functions -->
+					<div class="collapse navbar-collapse" id="navbarSupportedContent">
+						<ul class="navbar-nav mr-auto">
+							<li class="nav-item ml-3 btn-group-vertical">
+								<a class="nav-link" href="index.html">Home</a>
+							</li>
+							<li class="nav-item ml-3 btn-group-vertical">
+								<a class="nav-link position-relative" href="site/letter.html">News<span class="badge badge-danger">12</span></a>
+							</li>
+							<li class="nav-item ml-3 btn-group-vertical">
+								<a class="nav-link" href="site/register.html">Sign up</a>
+							</li>
+							<li class="nav-item ml-3 btn-group-vertical">
+								<a class="nav-link" href="site/login.html">Log in</a>
+							</li>
+							<li class="nav-item ml-3 btn-group-vertical dropdown">
+								<a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+									<img src="http://images.nowcoder.com/head/1t.png" class="rounded-circle" style="width:30px;"/>
+								</a>
+								<div class="dropdown-menu" aria-labelledby="navbarDropdown">
+									<a class="dropdown-item text-center" href="site/profile.html">Profile</a>
+									<a class="dropdown-item text-center" href="site/setting.html">Account settings</a>
+									<a class="dropdown-item text-center" href="site/login.html">Log out</a>
+									<div class="dropdown-divider"></div>
+									<span class="dropdown-item text-center text-secondary">Women In Code</span>
+								</div>
+							</li>
+						</ul>
+						<!-- Search-->
+						<form class="form-inline my-2 my-lg-0" action="site/search.html">
+							<input class="form-control mr-sm-2" type="search" aria-label="Search" />
+							<button class="btn btn-outline-light my-2 my-sm-0" type="submit">Search</button>
+						</form>
+					</div>
+				</nav>
+			</div>
+		</header>
+
+		<!-- 内容 -->
+		<div class="main">
+			<div class="container pl-5 pr-5 pt-3 pb-3 mt-3 mb-3">
+				<h3 class="text-center text-info border-bottom pb-3">Sign&nbsp;&nbsp;In</h3>
+				<form class="mt-5">				
+					<div class="form-group row" method="post" th:action="@{/login}">
+						<label for="username" class="col-sm-2 col-form-label text-right">Username:</label>
+						<div class="col-sm-10">
+							<!-- th:value="${param.username} = request.getParameter(username)
+							     user实体object会存在model里，放在constructor里的会存在request里-->
+							<input type="text" th:class="|form-control ${usernameMsg!=null?'is-invalid':''}|"
+								   id="username"
+								   th:value="${param.username}"
+								   name="username" placeholder="Please enter your username!" required>
+							<div class="invalid-feedback" th:text="${usernameMsg}">
+								The account does not exist!
+							</div>
+						</div>
+					</div>
+					<div class="form-group row mt-4">
+						<label for="password" class="col-sm-2 col-form-label text-right">Password:</label>
+						<div class="col-sm-10">
+							<input type="password" th:class="|form-control ${passwordMsg!=null?'is-invalid':''}|"
+								   id="password"
+								   th:value="${param.password}"
+								   name="password" placeholder="Please enter your password!" required>
+							<div class="invalid-feedback" th:text="${passwordMsg}">
+								Password can't be less than 8 charaters!
+							</div>							
+						</div>
+					</div>
+					<div class="form-group row mt-4">
+						<label for="verifycode" class="col-sm-2 col-form-label text-right">Verification code:</label>
+						<div class="col-sm-6">
+							<input type="text" th:class="|form-control ${codeMsg!=null?'is-invalid':''}|"
+								   id="verifycode"
+								   name="code" placeholder="Please enter your verification code!">
+							<div class="invalid-feedback" th:text="${codeMsg}">
+								Verification code incorrect!
+							</div>
+						</div>
+						<div class="col-sm-4">
+							<img th:src="@{/kaptcha}" id="kaptcha"style="width:100px;height:40px;" class="mr-2"/>
+							<a href="javascript:refresh_kaptcha();" class="font-size-12 align-bottom">Refresh</a>
+						</div>
+					</div>				
+					<div class="form-group row mt-4">
+						<div class="col-sm-2"></div>
+						<div class="col-sm-10">
+							<input type="checkbox" id="remember-me"
+								   name="rememberme"
+								   th:checked="${param.rememberme}">
+							<label class="form-check-label" for="remember-me">Remember me</label>
+							<a href="forget.html" class="text-danger float-right">Forget the password?</a>
+						</div>
+					</div>				
+					<div class="form-group row mt-4">
+						<div class="col-sm-2"></div>
+						<div class="col-sm-10 text-center">
+							<button type="submit" class="btn btn-info text-white form-control">Sign in</button>
+						</div>
+					</div>
+				</form>				
+			</div>
+		</div>
+
+		<!-- 尾部 -->
+		<footer style="background-color: #4f4487; position: fixed; bottom: 0; width: 100%;">
+			<div class="container">
+				<div class="row">
+					<!-- img -->
+					<div class="col-4">
+						<img src="https://i.pinimg.com/564x/02/bf/8c/02bf8c815344bb8f59d3efe3acf9718e.jpg" style="width:150px;" />
+					</div>
+					<!-- Company info -->
+					<div class="col-8 detail-info">
+						<div class="row">
+							<div class="col">
+								<ul class="nav">
+									<li class="nav-item">
+										<a class="nav-link text-light" href="#">About us</a>
+									</li>
+									<li class="nav-item">
+										<a class="nav-link text-light" href="#">Join Us</a>
+									</li>
+									<li class="nav-item">
+										<a class="nav-link text-light" href="#">FAQs</a>
+									</li>
+									<li class="nav-item">
+										<a class="nav-link text-light" href="#">Community Services</a>
+									</li>
+									<li class="nav-item">
+										<a class="nav-link text-light" href="#">Contact Us</a>
+									</li>
+									<li class="nav-item">
+										<a class="nav-link text-light" href="#">Disclaimer</a>
+									</li>
+									<li class="nav-item">
+										<a class="nav-link text-light" href="#">Insights</a>
+									</li>
+								</ul>
+							</div>
+						</div>
+						<div class="row">
+							<div class="col">
+								<ul class="nav btn-group-vertical company-info">
+									<li class="nav-item text-white-50">
+										Address：24 Old Oak Road, W12 8FJ, London
+									</li>
+									<li class="nav-item text-white-50">
+										Contact：0044-60728802&nbsp;&nbsp;&nbsp;&nbsp;admin@womenincode.com
+									</li>
+									<li class="nav-item text-white-50">
+										©2024 Women In Code. All rights reserved.
+									</li>
+
+								</ul>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</footer>
+	</div>
+	<script src="https://code.jquery.com/jquery-3.3.1.min.js" crossorigin="anonymous"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" crossorigin="anonymous"></script>
+	<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" crossorigin="anonymous"></script>
+	<script th:src="@{/js/global.js}"></script>
+	<script>
+		function refresh_kaptcha() {
+			var path = CONTEXT_PATH + "/kaptcha?p=" + Math.random();
+			$("#kaptcha").attr("src", path);
+		}
+	</script>
+</body>
+</html>

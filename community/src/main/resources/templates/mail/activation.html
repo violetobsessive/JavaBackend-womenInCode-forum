@@ -1,0 +1,20 @@
+<!doctype html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="utf-8">
+    <link rel="icon" href="https://i.pinimg.com/564x/ef/0c/77/ef0c771701846669a7ef6ee43650929e.jpg"/>
+    <title>[WomenInCode] Activate your account</title>
+</head>
+<body>
+	<div>
+		<p>
+			<b th:text="${email}">xxx@xxx.com</b>, Hi there,
+		</p>
+		<p>
+			You've registered on Women In Code. Please click the link below to activate your account.
+			<a th:href="${url}"></a>,
+			Activate your account!
+		</p>
+	</div>
+</body>
+</html>
